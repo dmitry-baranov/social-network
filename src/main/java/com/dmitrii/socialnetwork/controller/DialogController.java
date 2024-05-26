@@ -1,6 +1,6 @@
 package com.dmitrii.socialnetwork.controller;
 
-import com.example.api.DialogApiController;
+import com.otus.api.DialogApiController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
