@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'groovy'
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
     id 'org.openapi.generator' version '7.6.0'
@@ -26,13 +27,15 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
-//    implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
+    testImplementation 'org.spockframework:spock-core:2.4-M4-groovy-4.0'
+    testImplementation 'org.spockframework:spock-spring:2.4-M4-groovy-4.0'
+    testImplementation 'org.apache.groovy:groovy-all:4.0.21'
 }
 
 openApiGenerate {
@@ -58,7 +61,7 @@ sourceSets {
 
 compileJava.dependsOn tasks.openApiGenerate
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
 
