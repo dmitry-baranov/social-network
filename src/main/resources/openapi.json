@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "OTUS Highload Architect",
+    "title": "Social network API",
     "version": "1.2.0"
   },
   "paths": {

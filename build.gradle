@@ -43,7 +43,8 @@ openApiGenerate {
     modelPackage = "com.otus.model"
     configOptions = [
             dateLibrary: "java8",
-            useJakartaEe: "true"
+            useJakartaEe: "true",
+            interfaceOnly: "true"
     ]
 }
 
