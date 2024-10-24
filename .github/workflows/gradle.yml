@@ -22,14 +22,7 @@ jobs:
           cache: gradle
 
       - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run tests
-        run: ./gradlew test
-
-      - name: Submit Gradle dependency graph
-        uses: actions/dependency-submission-action@v2
+        uses: gradle/gradle-build-action@v2
         with:
-          manager: gradle
-          manifest: "**/build.gradle"
-          lock: "**/build.gradle"
+          arguments: build
+          build-root-directory: . # Если ваш build.gradle находится не в корневой директории, укажите путь
