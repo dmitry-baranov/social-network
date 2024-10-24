@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew test
 
       - name: Submit Gradle dependency graph
-        uses: github/dependency-submission-action@v2
+        uses: actions/dependency-submission-action@v2
         with:
           manager: gradle
           manifest: "**/build.gradle"
