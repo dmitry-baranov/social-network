@@ -1,29 +1,52 @@
 package com.dmitrii.socialnetwork.controller;
 
-import com.otus.api.LoginApi;
-import jakarta.annotation.Generated;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dmitrii.socialnetwork.controller.api.LoginApi;
+import com.dmitrii.socialnetwork.controller.model.LoginPost200Response;
+import com.dmitrii.socialnetwork.controller.model.LoginPost500Response;
+import com.dmitrii.socialnetwork.controller.model.LoginPostRequest;
+import com.dmitrii.socialnetwork.security.JwtService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.NativeWebRequest;
 
-import java.util.Optional;
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-27T08:37:28.947588+03:00[Europe/Moscow]", comments = "Generator version: 7.6.0")
 @Controller
-@RequestMapping("${openapi.socialNetwork.base-path:}")
+@Slf4j
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class LoginApiController implements LoginApi {
 
-    private final NativeWebRequest request;
+  private final AuthenticationManager authenticationManager;
+  private final JwtService jwtService;
 
-    @Autowired
-    public LoginApiController(NativeWebRequest request) {
-        this.request = request;
-    }
+  @Override
+  public ResponseEntity<LoginPost200Response> loginPost(LoginPostRequest loginPostRequest) {
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+            loginPostRequest.getUsername(),
+            loginPostRequest.getPassword()
+        )
+    );
 
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.ofNullable(request);
-    }
+    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    String jwt = jwtService.generateToken(userDetails);
+    return ResponseEntity.ok(new LoginPost200Response().token(jwt));
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<LoginPost500Response> handleBadCredentials(BadCredentialsException ex) {
+    LoginPost500Response errorResponse = new LoginPost500Response()
+        .message("Invalid username or password")
+        .requestId(null)
+        .code(500);
+    return ResponseEntity.status(500).body(errorResponse);
+  }
 
 }

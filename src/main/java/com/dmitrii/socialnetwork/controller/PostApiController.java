@@ -1,29 +1,44 @@
 package com.dmitrii.socialnetwork.controller;
 
-import com.otus.api.PostApi;
-import jakarta.annotation.Generated;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dmitrii.socialnetwork.controller.api.PostApi;
+import com.dmitrii.socialnetwork.controller.model.PostCreatePostRequest;
+import com.dmitrii.socialnetwork.controller.model.PostDto;
+import com.dmitrii.socialnetwork.controller.model.PostUpdatePutRequest;
+import java.math.BigDecimal;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.NativeWebRequest;
 
-import java.util.Optional;
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-27T08:37:28.947588+03:00[Europe/Moscow]", comments = "Generator version: 7.6.0")
 @Controller
-@RequestMapping("${openapi.socialNetwork.base-path:}")
+@RequestMapping("${openapi.social-network.base-path:}")
+@RequiredArgsConstructor
 public class PostApiController implements PostApi {
 
-    private final NativeWebRequest request;
+  @Override
+  public ResponseEntity<String> postCreatePost(PostCreatePostRequest postCreatePostRequest) {
+    return PostApi.super.postCreatePost(postCreatePostRequest);
+  }
 
-    @Autowired
-    public PostApiController(NativeWebRequest request) {
-        this.request = request;
-    }
+  @Override
+  public ResponseEntity<Void> postDeleteIdPut(String id) {
+    return PostApi.super.postDeleteIdPut(id);
+  }
 
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.ofNullable(request);
-    }
+  @Override
+  public ResponseEntity<List<PostDto>> postFeedGet(BigDecimal offset, BigDecimal limit) {
+    return PostApi.super.postFeedGet(offset, limit);
+  }
+
+  @Override
+  public ResponseEntity<PostDto> postGetIdGet(String id) {
+    return PostApi.super.postGetIdGet(id);
+  }
+
+  @Override
+  public ResponseEntity<Void> postUpdatePut(PostUpdatePutRequest postUpdatePutRequest) {
+    return PostApi.super.postUpdatePut(postUpdatePutRequest);
+  }
 
 }
