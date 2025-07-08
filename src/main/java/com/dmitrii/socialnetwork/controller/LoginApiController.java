@@ -48,5 +48,4 @@ public class LoginApiController implements LoginApi {
         .code(500);
     return ResponseEntity.status(500).body(errorResponse);
   }
-
 }

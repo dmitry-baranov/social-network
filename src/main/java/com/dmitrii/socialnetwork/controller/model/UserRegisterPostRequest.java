@@ -22,7 +22,7 @@ public class UserRegisterPostRequest {
 
   private @Nullable String firstName;
 
-  private @Nullable String secondName;
+  private @Nullable String lastName;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private @Nullable LocalDate birthdate;
@@ -67,21 +67,21 @@ public class UserRegisterPostRequest {
     return firstName;
   }
 
-  public UserRegisterPostRequest secondName(String secondName) {
-    this.secondName = secondName;
+  public UserRegisterPostRequest lastName(String lastName) {
+    this.lastName = lastName;
     return this;
   }
 
   /**
-   * Get secondName
+   * Get lastName
    *
-   * @return secondName
+   * @return lastName
    */
 
-  @Schema(name = "second_name", example = "Фамилия", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("second_name")
-  public String getSecondName() {
-    return secondName;
+  @Schema(name = "last_name", example = "Фамилия", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_name")
+  public String getLastName() {
+    return lastName;
   }
 
   public UserRegisterPostRequest birthdate(LocalDate birthdate) {
@@ -163,7 +163,7 @@ public class UserRegisterPostRequest {
     UserRegisterPostRequest userRegisterPostRequest = (UserRegisterPostRequest) o;
     return Objects.equals(this.username, userRegisterPostRequest.username) &&
         Objects.equals(this.firstName, userRegisterPostRequest.firstName) &&
-        Objects.equals(this.secondName, userRegisterPostRequest.secondName) &&
+        Objects.equals(this.lastName, userRegisterPostRequest.lastName) &&
         Objects.equals(this.birthdate, userRegisterPostRequest.birthdate) &&
         Objects.equals(this.biography, userRegisterPostRequest.biography) &&
         Objects.equals(this.city, userRegisterPostRequest.city) &&
@@ -172,7 +172,7 @@ public class UserRegisterPostRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, firstName, secondName, birthdate, biography, city, password);
+    return Objects.hash(username, firstName, lastName, birthdate, biography, city, password);
   }
 
   @Override
@@ -180,7 +180,7 @@ public class UserRegisterPostRequest {
     String sb = "class UserRegisterPostRequest {\n" +
         "    username: " + toIndentedString(username) + "\n" +
         "    firstName: " + toIndentedString(firstName) + "\n" +
-        "    secondName: " + toIndentedString(secondName) + "\n" +
+        "    lastName: " + toIndentedString(lastName) + "\n" +
         "    birthdate: " + toIndentedString(birthdate) + "\n" +
         "    biography: " + toIndentedString(biography) + "\n" +
         "    city: " + toIndentedString(city) + "\n" +

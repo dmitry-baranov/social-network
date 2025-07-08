@@ -79,7 +79,7 @@ class UserDaoSpec extends TestcontainersBase {
         and: "fields contain NULL"
         Optional<User> retrieved = userDao.findById(minimalUser.id)
         retrieved.get().with {
-            assert secondName == null
+            assert lastName == null
             assert birthdate == null
             assert biography == null
             assert city == null
@@ -107,7 +107,7 @@ class UserDaoSpec extends TestcontainersBase {
                 .id(UUID.randomUUID())
                 .username("john_doe_${UUID.randomUUID().toString().substring(0, 8)}")
                 .firstName("John")
-                .secondName("Doe")
+                .lastName("Doe")
                 .birthdate(LocalDate.of(1990, 5, 15))
                 .biography("Developer from Moscow")
                 .city("Moscow")
