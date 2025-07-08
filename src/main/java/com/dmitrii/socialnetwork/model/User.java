@@ -27,7 +27,7 @@ public class User {
   @NotBlank(message = "First name is required")
   private String firstName;
 
-  private String secondName;
+  private String lastName;
 
   private LocalDate birthdate;
 

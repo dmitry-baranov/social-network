@@ -20,15 +20,15 @@ public class UserDao {
   private static final String SQL_USER_FIND_BY_USERNAME_AND_LASTNAME = "SELECT * FROM users WHERE first_name LIKE :firstName AND last_name LIKE :lastName";
 
   private static final String SQL_USER_CREATE =
-      "INSERT INTO users (id, username, first_name, second_name, birthdate, biography, city, password_hash) "
+      "INSERT INTO users (id, username, first_name, last_name, birthdate, biography, city, password_hash) "
           +
-          "VALUES (:id, :username, :firstName, :secondName, :birthdate, :biography, :city, :passwordHash)";
+          "VALUES (:id, :username, :firstName, :lastName, :birthdate, :biography, :city, :passwordHash)";
 
   private static final RowMapper<User> USER_ROW_MAPPER = (rs, i) -> User.builder()
       .id((UUID) rs.getObject("id"))
       .username(rs.getString("username"))
       .firstName(rs.getString("first_name"))
-      .secondName(rs.getString("second_name"))
+      .lastName(rs.getString("last_name"))
       .birthdate(rs.getObject("birthdate", java.time.LocalDate.class))
       .biography(rs.getString("biography"))
       .city(rs.getString("city"))
@@ -47,7 +47,7 @@ public class UserDao {
         .addValue("id", user.getId())
         .addValue("username", user.getUsername())
         .addValue("firstName", user.getFirstName())
-        .addValue("secondName", user.getSecondName())
+        .addValue("lastName", user.getLastName())
         .addValue("birthdate", user.getBirthdate())
         .addValue("biography", user.getBiography())
         .addValue("city", user.getCity())
@@ -66,7 +66,7 @@ public class UserDao {
 
   public List<User> findByFirstNameAndLastName(String firstName, String lastName) {
     return jdbc.query(SQL_USER_FIND_BY_USERNAME_AND_LASTNAME, new MapSqlParameterSource()
-        .addValue("firstName", firstName)
-        .addValue("lastName", lastName), USER_ROW_MAPPER);
+        .addValue("firstName", firstName + "%")
+        .addValue("lastName", lastName + "%"), USER_ROW_MAPPER);
   }
 }

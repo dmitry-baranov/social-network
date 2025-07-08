@@ -3,7 +3,7 @@ CREATE TABLE users
     id UUID PRIMARY KEY,
     username VARCHAR(21) NOT NULL UNIQUE ,
     first_name VARCHAR(21) NOT NULL,
-    second_name VARCHAR(21),
+    last_name VARCHAR(21) NOT NULL,
     birthdate DATE,
     biography TEXT,
     city VARCHAR(21),

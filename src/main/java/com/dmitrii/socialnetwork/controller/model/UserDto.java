@@ -22,7 +22,7 @@ public class UserDto {
 
   private @Nullable String firstName;
 
-  private @Nullable String secondName;
+  private @Nullable String lastName;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private @Nullable LocalDate birthdate;
@@ -70,8 +70,8 @@ public class UserDto {
     return username;
   }
 
-  public UserDto secondName(String secondName) {
-    this.secondName = secondName;
+  public UserDto lastName(String lastName) {
+    this.lastName = lastName;
     return this;
   }
 
@@ -90,13 +90,13 @@ public class UserDto {
   /**
    * Фамилия
    *
-   * @return secondName
+   * @return lastName
    */
 
-  @Schema(name = "second_name", example = "Фамилия", description = "Фамилия", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("second_name")
-  public String getSecondName() {
-    return secondName;
+  @Schema(name = "last_name", example = "Фамилия", description = "Фамилия", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("last_name")
+  public String getLastName() {
+    return lastName;
   }
 
   public UserDto birthdate(LocalDate birthdate) {
@@ -162,7 +162,7 @@ public class UserDto {
     return Objects.equals(this.id, userDto.id) &&
         Objects.equals(this.username, userDto.username) &&
         Objects.equals(this.firstName, userDto.firstName) &&
-        Objects.equals(this.secondName, userDto.secondName) &&
+        Objects.equals(this.lastName, userDto.lastName) &&
         Objects.equals(this.birthdate, userDto.birthdate) &&
         Objects.equals(this.biography, userDto.biography) &&
         Objects.equals(this.city, userDto.city);
@@ -170,7 +170,7 @@ public class UserDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, firstName, secondName, birthdate, biography, city);
+    return Objects.hash(id, username, firstName, lastName, birthdate, biography, city);
   }
 
   @Override
@@ -179,7 +179,7 @@ public class UserDto {
         "    id: " + toIndentedString(id) + "\n" +
         "    username: " + toIndentedString(username) + "\n" +
         "    firstName: " + toIndentedString(firstName) + "\n" +
-        "    secondName: " + toIndentedString(secondName) + "\n" +
+        "    lastName: " + toIndentedString(lastName) + "\n" +
         "    birthdate: " + toIndentedString(birthdate) + "\n" +
         "    biography: " + toIndentedString(biography) + "\n" +
         "    city: " + toIndentedString(city) + "\n" +

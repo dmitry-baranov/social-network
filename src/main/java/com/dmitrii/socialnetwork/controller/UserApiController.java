@@ -5,10 +5,10 @@ import com.dmitrii.socialnetwork.controller.model.ErrorResponse;
 import com.dmitrii.socialnetwork.controller.model.UserDto;
 import com.dmitrii.socialnetwork.controller.model.UserRegisterPost200Response;
 import com.dmitrii.socialnetwork.controller.model.UserRegisterPostRequest;
+import com.dmitrii.socialnetwork.exception.UsernameAlreadyExistsException;
 import com.dmitrii.socialnetwork.mapping.UserMapper;
 import com.dmitrii.socialnetwork.model.User;
 import com.dmitrii.socialnetwork.service.UserService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -70,4 +70,16 @@ public class UserApiController implements UserApi {
     return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(UsernameAlreadyExistsException.class)
+  public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(
+      UsernameAlreadyExistsException ex
+  ) {
+    ErrorResponse error = new ErrorResponse(
+        LocalDateTime.now(),
+        400,
+        "Username already exist",
+        ex.getMessage()
+    );
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
 }

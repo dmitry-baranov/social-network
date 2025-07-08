@@ -1,6 +1,7 @@
 package com.dmitrii.socialnetwork.service;
 
-import com.dmitrii.socialnetwork.exception.UserNameAlreadyExistsException;
+import com.dmitrii.socialnetwork.exception.JdbcExceptionUtil;
+import com.dmitrii.socialnetwork.exception.UsernameAlreadyExistsException;
 import com.dmitrii.socialnetwork.model.User;
 import com.dmitrii.socialnetwork.service.dao.UserDao;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,13 +20,18 @@ public class UserService {
   private final UserDao repo;
 
   public User register(User user) {
-    log.info("Attempting to register user: {}", user.getUsername());
-    if (!repo.saveUser(user)) {
-      log.error("User name already exists: {}", user.getUsername());
-      throw new UserNameAlreadyExistsException("User name already exists");
+    try {
+      log.info("Attempting to register user: {}", user.getUsername());
+      repo.saveUser(user);
+      log.info("User registered successfully: {}", user.getUsername());
+      return user;
+    } catch (DataIntegrityViolationException ex) {
+      if (JdbcExceptionUtil.isDuplicateKey(ex)) {
+        log.error("User name already exists: {}", user.getUsername());
+        throw new UsernameAlreadyExistsException(user.getUsername(), ex);
+      }
+      throw ex;
     }
-    log.info("User registered successfully: {}", user.getUsername());
-    return user;
   }
 
   public User getUserById(UUID id) {
