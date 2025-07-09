@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -65,6 +66,9 @@ public interface UserApi {
           @ApiResponse(responseCode = "503", description = "Ошибка сервера", content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = LoginPost500Response.class))
           })
+      },
+      security = {
+          @SecurityRequirement(name = "bearerAuth")
       }
   )
   @SecurityRequirement(name = "BearerAuth")
@@ -73,6 +77,7 @@ public interface UserApi {
       value = "/user/get/id/{id}",
       produces = {"application/json"}
   )
+
   ResponseEntity<UserDto> getUserById(
       @Parameter(name = "id", description = "Идентификатор пользователя", required = true, in = ParameterIn.PATH) @PathVariable("id") UUID id
   );
@@ -100,6 +105,9 @@ public interface UserApi {
           @ApiResponse(responseCode = "503", description = "Ошибка сервера", content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = LoginPost500Response.class))
           })
+      },
+      security = {
+          @SecurityRequirement(name = "bearerAuth")
       }
   )
   @SecurityRequirement(name = "BearerAuth")
@@ -177,6 +185,9 @@ public interface UserApi {
           @ApiResponse(responseCode = "503", description = "Ошибка сервера", content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = LoginPost500Response.class))
           })
+      },
+      security = {
+          @SecurityRequirement(name = "bearerAuth")
       }
   )
   @SecurityRequirement(name = "BearerAuth")

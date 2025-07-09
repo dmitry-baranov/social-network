@@ -1,14 +1,11 @@
 package com.dmitrii.socialnetwork.config;
 
-import com.dmitrii.socialnetwork.security.CustomUserDetailsService;
 import com.dmitrii.socialnetwork.security.JwtAuthenticationFilter;
 import com.dmitrii.socialnetwork.security.RestAuthEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,17 +30,9 @@ public class SecurityConfig {
   }
 
   @Bean
-  public AuthenticationProvider authenticationProvider(
-      PasswordEncoder passwordEncoder, CustomUserDetailsService userDetailsService) {
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setPasswordEncoder(passwordEncoder);
-    provider.setUserDetailsService(userDetailsService);
-    return provider;
-  }
-
-  @Bean
   public SecurityFilterChain securityFilterChain(
-      HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
+      HttpSecurity http
+  ) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
         .sessionManagement(session ->
@@ -62,7 +51,6 @@ public class SecurityConfig {
         .exceptionHandling(ex -> ex
             .authenticationEntryPoint(restAuthEntryPoint)
         )
-        .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthenticationFilter,
             UsernamePasswordAuthenticationFilter.class);
     return http.build();
