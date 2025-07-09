@@ -67,6 +67,7 @@ class UserDaoSpec extends TestcontainersBase {
                 .id(UUID.randomUUID())
                 .username("minimal_user")
                 .firstName("Min")
+                .lastName("Nim")
                 .passwordHash("\$2a\$12\$5Z8zM6L9Yf7q1w0Kj3rT.6VbQeDcXwRtjJ7mNpOqRsSvk1S2hL5G")
                 .build()
 
@@ -79,7 +80,6 @@ class UserDaoSpec extends TestcontainersBase {
         and: "fields contain NULL"
         Optional<User> retrieved = userDao.findById(minimalUser.id)
         retrieved.get().with {
-            assert lastName == null
             assert birthdate == null
             assert biography == null
             assert city == null

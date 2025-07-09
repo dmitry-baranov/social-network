@@ -1,13 +1,16 @@
 package com.dmitrii.socialnetwork.service
 
-import com.dmitrii.socialnetwork.exception.UserNameAlreadyExistsException
+import com.dmitrii.socialnetwork.exception.UsernameAlreadyExistsException
 import com.dmitrii.socialnetwork.model.User
 import com.dmitrii.socialnetwork.service.dao.UserDao
 import jakarta.validation.Validation
 import jakarta.validation.Validator
 import jakarta.validation.ValidatorFactory
+import org.springframework.dao.DataIntegrityViolationException
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import java.sql.SQLException
 
 class UserServiceSpec extends Specification {
 
@@ -40,8 +43,11 @@ class UserServiceSpec extends Specification {
         userService.register(user)
 
         then: "Exception is thrown"
-        1 * userDao.saveUser(user) >> false
-        thrown(UserNameAlreadyExistsException)
+        1 * userDao.saveUser(user) >> {
+            def sqlException = new SQLException("duplicate key", "23505")
+            throw new DataIntegrityViolationException("duplicate key", sqlException)
+        }
+        thrown(UsernameAlreadyExistsException)
     }
 
     @Unroll
