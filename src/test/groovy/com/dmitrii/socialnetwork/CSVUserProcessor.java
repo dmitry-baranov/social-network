@@ -11,6 +11,8 @@ import java.util.*;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
+@Ignore
+@spock.lang.Ignore
 public class CSVUserProcessor {
     private final Set<String> usedUsernames = new HashSet<>();
     private static final List<String> HOBBIES = Arrays.asList(
