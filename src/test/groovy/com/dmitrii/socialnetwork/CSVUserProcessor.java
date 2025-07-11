@@ -117,6 +117,7 @@ public class CSVUserProcessor {
 
     @Test
     @Ignore
+    @spock.lang.Ignore
     public void generateData() throws IOException, CsvValidationException {
         new CSVUserProcessor().processCSVFile("./src/test/resources/people.v2.csv", "./db_import/people.csv");
         System.out.println("Генерация завершена.");
