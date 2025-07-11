@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class CSVUserProcessor {
@@ -116,7 +117,7 @@ public class CSVUserProcessor {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void generateData() throws IOException, CsvValidationException {
         new CSVUserProcessor().processCSVFile("./src/test/resources/people.v2.csv", "./db_import/people.csv");
         System.out.println("Генерация завершена.");
