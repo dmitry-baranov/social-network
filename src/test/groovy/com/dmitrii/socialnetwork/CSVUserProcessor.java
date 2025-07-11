@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Ignore
-@spock.lang.Ignore
 public class CSVUserProcessor {
     private final Set<String> usedUsernames = new HashSet<>();
     private static final List<String> HOBBIES = Arrays.asList(
@@ -118,8 +117,7 @@ public class CSVUserProcessor {
     }
 
     @Test
-    @Ignore
-    @spock.lang.Ignore
+    @Disabled
     public void generateData() throws IOException, CsvValidationException {
         new CSVUserProcessor().processCSVFile("./src/test/resources/people.v2.csv", "./db_import/people.csv");
         System.out.println("Генерация завершена.");
